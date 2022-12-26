@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+   wordpress_db:
+     container_name: wordpress_db
+     image: mysql:latest
+     volumes:
+       - /portainer/wordpress/db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: "CHANGEME4"     # You can make the ROOT_PASSWORD and USER_PASSWORD the same but this is theoretically less secure. Just generate two 40char passwords and you're set :)
+       MYSQL_DATABASE: CHANGEME             # A better option would be to use an external .env file, but either way you're storing the passwords in plaintext during creation /shrug
+       MYSQL_USER: CHANGEME2
+       MYSQL_PASSWORD: "CHANGEME3"
+     networks:
+       wordpress:
+         ipv4_address: 168.18.0.9
+
+
+   wordpress:
+     container_name: wordpress
+     depends_on:
+       - wordpress_db
+     image: wordpress:latest
+     volumes:
+       - /portainer/wordpress/wordpress:/var/www/html
+     ports:
+       - "0.0.0.0:3435:80"      # "3435" will be the port your WP instance lives on. You can change this to whatever.
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: 168.18.0.9:3306
+       WORDPRESS_DB_USER: CHANGEME2
+       WORDPRESS_DB_PASSWORD: "CHANGEME3"
+     networks:
+       wordpress:
+         ipv4_address: 168.18.0.10
+       
+   phpmyadmin:
+     container_name: wordpress_phpmyadmin
+     image: phpmyadmin/phpmyadmin
+     ports:
+       - 8182:80              # "8182" will be the port your PHPmyadmin instance lives on. You can change this to whatever.
+     environment:             # We use phpmyadmin to change WP settings if your WP instance isn't reachable.
+       MYSQL_USERNAME: CHANGEME2
+       MYSQL_ROOT_PASSWORD: "CHANGEME4"
+       PMA_HOST: 168.18.0.9
+     networks:
+       wordpress:
+         ipv4_address: 168.18.0.5
+   
+   wordpress_redis:               # Redis is used for caching, make sure to install the redis plugin in WP and follow the README.
+     container_name: reds_redis
+     image: redis:alpine
+     networks:
+       wordpress:
+         ipv4_address: 168.18.0.11
+     
+    
+networks:
+  wordpress:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 168.18.0.0/24
+          gateway: 168.18.0.1

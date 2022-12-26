@@ -1,1 +1,2 @@
-hello
+# Docker Compose files
+Just a repository of compose files I use myself, both to share as a quick-start and as safekeeping measure. The files are usually plug-and-play and only require changing a password or directory here and there.
