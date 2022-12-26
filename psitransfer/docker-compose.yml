@@ -1,0 +1,11 @@
+version: '3'
+services:
+    psitransfer:
+        container_name: psitransfer
+        image: psitrax/psitransfer
+        ports:
+            - '0.0.0.0:3055:3000'
+        environment:
+            - PSITRANSFER_ADMIN_PASS=CHANGEME
+        volumes:
+            - '/portainer/psitransfer/data:/data'

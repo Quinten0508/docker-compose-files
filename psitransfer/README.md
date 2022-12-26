@@ -1,0 +1,1 @@
+PSI Transfer composefile. Data is stored under `/portainer/psitransfer`. Volume mounts and port can be changed. Admin password needs to be changed before deployment.
