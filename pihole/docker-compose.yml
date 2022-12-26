@@ -10,7 +10,7 @@ services:
       - "53:53/udp"
       - "8082:80/tcp"
     environment:
-      TZ: 'Continent/Capital' CHANGEME
+      TZ: 'Continent/Capital CHANGEME'
       WEBPASSWORD: 'CHANGEME'
     volumes:
      - '/portainer/pihole/etc-pihole:/etc/pihole'
