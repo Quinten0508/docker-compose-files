@@ -1,0 +1,1 @@
+Simple Nginx Proxy Manager composefile, straight from the NPM website. Ports cannot be changed (except for 81), volume mounts can be changed.
