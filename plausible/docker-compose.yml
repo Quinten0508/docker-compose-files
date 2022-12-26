@@ -1,5 +1,6 @@
 version: "3"
 services:
+
   plausible_db:
     container_name: plausible_db
     image: postgres:12

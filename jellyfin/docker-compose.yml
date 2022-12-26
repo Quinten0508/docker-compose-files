@@ -1,0 +1,12 @@
+version: "3"
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin
+    ports:
+      - 8096:8096
+    volumes:
+      - /portainer/jellyfin/config:/config
+      - /portainer/jellyfin/cache:/cache
+      - /portainer/jellyfin/media:/media
+    restart: always
