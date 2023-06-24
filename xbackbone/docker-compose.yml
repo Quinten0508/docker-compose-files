@@ -1,0 +1,15 @@
+version: "3"
+services:
+  xbackbone:
+    image: lscr.io/linuxserver/xbackbone:latest
+    container_name: xbackbone
+    volumes:
+      - /portainer/xbackbone/:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    ports:
+      - 86:80
+      - 446:444
+    restart: always

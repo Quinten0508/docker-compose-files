@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  server:
+    container_name: gitea
+    image: gitea/gitea:latest
+    ports:
+      - "3000:3000"
+      - "222:22"
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - DISABLE_REGISTRATION=false
+    volumes:
+      - /portainer/gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: always

@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+    archivebox:
+        container_name: archivebox
+        image: archivebox/archivebox:master
+        command: server --quick-init 0.0.0.0:8000
+        ports:
+            - 8040:8000
+        environment:
+            - ALLOWED_HOSTS=*
+            - MEDIA_MAX_SIZE=50m
+            - SEARCH_BACKEND_ENGINE=sonic
+            - SEARCH_BACKEND_HOST_NAME=sonic
+            - SEARCH_BACKEND_PASSWORD=$SEARCH_BACKEND_PASSWORD
+            - MEDIA_TIMEOUT=3600
+            - SNAPSHOTS_PER_PAGE=100
+            - SAVE_SCREENSHOT=True
+            - RESOLUTION=3840,2160
+            - SAVE_READABILITY=True
+            - SAVE_MERCURY=True
+            - CHECK_SSL_VALIDITY=False
+            - WGET_USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0'
+            - USE_COLOR=False
+            - PUBLIC_INDEX=False
+            - PUBLIC_SNAPSHOTS=False
+            - PUBLIC_ADD_VIEW=False
+        volumes:
+            - /portainer/archivebox/data:/data
+        restart: always
+
+    sonic:
+        container_name: sonic
+        image: valeriansaliou/sonic:latest
+        expose:
+            - 1491
+        environment:
+            - SEARCH_BACKEND_PASSWORD=$SEARCH_BACKEND_PASSWORD
+        volumes:
+            - /portainer/archivebox/sonic.cfg:/etc/sonic.cfg:ro
+            - /portainer/archivebox/data/sonic:/var/lib/sonic/store
+        restart: always
+

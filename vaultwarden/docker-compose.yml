@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    restart: always
+    volumes:
+      - /vaultwarden-data:/data/
+    ports:
+      - "5555:80"
+      - "3012:3012"
+    environment:
+      - SIGNUPS_ALLOWED=false # SET TO FALSE AFTER REGISTERING TO STOP FREELOADERS
+    env_file: stack.env # DOWNLOAD YOUR OWN .env FILE FROM THE GITHUB REPO / DOCS

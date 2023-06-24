@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  goaccess:
+    container_name: goaccess
+    image: xavierh/goaccess-for-nginxproxymanager:latest
+    ports:
+        - '7880:7880'
+    environment:
+        - TZ=Europe/Amsterdam
+        - BASIC_AUTH=False #optional
+        - BASIC_AUTH_USERNAME=user #optional
+        - BASIC_AUTH_PASSWORD=pass #optional         
+    volumes:
+        - /data/compose/30/data/logs:/opt/log # CHANGE ME
+    restart: always

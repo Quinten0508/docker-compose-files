@@ -1,7 +1,6 @@
 version: 3
-
-# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
+
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
@@ -11,10 +10,12 @@ services:
       - "53:53/udp"
       - "8082:80/tcp"
     environment:
-      TZ: 'Continent/Capital CHANGEME'
-      WEBPASSWORD: 'CHANGEME'
+      TZ: 'Europe/Amsterdam'  # CHANGE ME
+      WEBPASSWORD: 'changeme'          # CHANGE ME
     volumes:
      - '/portainer/pihole/etc-pihole:/etc/pihole'
      - '/portainer/pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     restart: always
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/

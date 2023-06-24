@@ -1,24 +1,24 @@
 version: "3"
-
 services:
+
   nextcloud:
-    image: nextcloud/all-in-one:latest
-    restart: always
     container_name: nextcloud-aio-mastercontainer
-    volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+    image: nextcloud/all-in-one:latest
     ports:
       - 8081:8080
     environment:
       - APACHE_PORT=11000
       - APACHE_IP_BINDING=0.0.0.0
-      - NEXTCLOUD_DATADIR=/run/media/quinten/T7/nextcloud_data/
-      - NEXTCLOUD_UPLOAD_LIMIT=100G
+      - NEXTCLOUD_DATADIR=/portainer/nextcloud/data/ # CHANGE TO DATA DIRECTORY
+      - NEXTCLOUD_UPLOAD_LIMIT=100G               # CLOUDFLARE ALLOWS 100MB UPLOAD SIZE MAX
       - NEXTCLOUD_MAX_TIME=360000
-      - NEXTCLOUD_MEMORY_LIMIT=6144M
+      - NEXTCLOUD_MEMORY_LIMIT=6144M              # CHANGE DEPENDING ON SYSTEM SPECS
       - NEXTCLOUD_ADDITIONAL_APKS=imagemagick ffmpeg
       - NEXTCLOUD_ENABLE_DRI_DEVICE=true
+    volumes:
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    restart: always
 
 volumes:
   nextcloud_aio_mastercontainer:

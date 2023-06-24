@@ -1,0 +1,1 @@
+Minimal AdGuard setup. No DHCP, DoH, DoT or DNSCrypt included.

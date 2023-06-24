@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
   jellyfin:
@@ -11,3 +11,11 @@ services:
       - /portainer/jellyfin/cache:/cache
       - /portainer/jellyfin/media:/media
     restart: always
+
+#  jellyfin-vue:
+#    container_name: jellyfin-vue
+#    image: ghcr.io/jellyfin/jellyfin-vue:unstable
+#    ports:
+#      - 8096:80
+#    restart: always
+# jellyfin-vue is a new experimental front-end. You'll still need the regular jellyfin service running at the same time.

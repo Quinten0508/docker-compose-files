@@ -1,0 +1,25 @@
+version: "3"
+services:
+
+  navidrome:
+    container_name: navidrome
+    image: deluan/navidrome:latest
+    user: 1000:1000 # User ID on unix systems, must have read (+write?) access to volumes.
+    ports:
+      - "4533:4533"
+    environment:
+      ND_SCANSCHEDULE: 24h
+      ND_LOGLEVEL: info  
+      ND_SESSIONTIMEOUT: 24h
+      ND_COVERJPEGQUALITY: 100
+      ND_ENABLEARTWORKPRECACHE: true
+      ND_ENABLESHARING: true
+      ND_LASTFM_APIKEY: $ND_LASTFM_APIKEY
+      ND_LASTFM_SECRET: $ND_LASTFM_SECRET
+      ND_SPOTIFY_ID: $ND_SPOTIFY_ID
+      ND_SPOTIFY_SECRET: $ND_SPOTIFY_SECRET
+      ND_SUBSONICARTISTPARTICIPATIONS: true
+    volumes:
+      - "/portainer/navidrome/:/data"
+      - "/portainer/navidrome/music:/music:ro"    # mounted as read-only.
+    restart: always
