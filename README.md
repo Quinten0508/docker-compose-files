@@ -20,6 +20,8 @@ services:
     expose:
     ports:
     environment:
+    sysctls:
+    cap_add:
     volumes:
     network:
     restart:
