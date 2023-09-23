@@ -2,6 +2,28 @@
 Repository containing docker-compose files I use (or have used). Be sure to check the documentation of whatever service you want to run for any configuration changes or other updates. These composefiles will pull the latest image, but their config won't magically adapt to breaking changes that may be introduced in the future. The date of the last commit should be a reasonable indicator of when this last worked (for me). 
 Use these files as a template to create your own setup, do not copy and deploy them mindlessly. Most important: **Read the README!**
 
+## Current stacks
+
+| Name                                                | Containers |
+|-----------------------------------------------------|--------------------------------------|
+| [Adguard](./adguard)                                | `adguard/adguardhome`|
+| [Archivebox](./archivebox)                          | `archivebox/archivebox` |
+| [Arr*-stack](arr-stack)                             | `binhex/arch-qbittorrentvpn`, `ghcr.io/hotio/sabnzbd`, `ghcr.io/hotio/radarr`, `ghcr.io/hotio/sonarr`, `ghcr.io/hotio/lidarr`, `ghcr.io/hotio/readarr`, `ghcr.io/hotio/bazarr`, `ghcr.io/hotio/jellyseerr`, `ghcr.io/hotio/doplarr`, `ghcr.io/hotio/rflood` |
+| [Gitea](./gitea)                                    | `gitea/gitea` |
+| [Jellyfin](./jellyfin)                              | `jellyfin/jellyfin` |
+| [Navidrome](./navidrome)                            | `deluan/navidrome` |
+| [Nextcloud-AIO](./nextcloud-aio)                    | `nextcloud/all-in-one` |
+| [Nginx Proxy Manager](./npm)                        | `jc21/nginx-proxy-manager` |
+| [Nginx Proxy Manager GoAccess](./npm-goaccess)      | `xavierh/goaccess-for-nginxproxymanager` |
+| [PiHole](./pihole)                                  | `pihole/pihole` |
+| [Plausible](./plausible)                            | `plausible/analytics`, `postgres`, `maxmindinc/geoipupdate`, `yandex/clickhouse-server` |
+| [PsiTransfer](./psitransfer)                        | `psitrax/psitransfer` |
+| [Vaultwarden](./vaultwarden)                        | `vaultwarden/server` |
+| [Watchtower](./watchtower)                          | `containrrr/watchtower` |
+| [Wordpress](./wordpress)                            | `wordpress:latest`, `mysql`, `phpmyadmin/phpmyadmin`, `redis:alpine` |
+| [xBackBone](./xbackbone)                            | `lscr.io/linuxserver/xbackbone` |
+
+
 ## General
 * Any volume mounts with e.g. config or data are stored at `/portainer/<service_name>` unless specified otherwise. 
 * Any web interfaces exposed are ran through a reverse proxy which supplies SSL certificates. Running these services barebones usually means access via insecure HTTP and leaves you open to attacks. **Do not port-forward or expose these services to the internet without a reverse proxy.**
