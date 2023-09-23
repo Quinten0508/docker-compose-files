@@ -4,7 +4,7 @@ Use these files as a template to create your own setup, do not copy and deploy t
 
 ## Current stacks
 
-| Name                                                | Containers |
+| Name                                                | Images |
 |-----------------------------------------------------|--------------------------------------|
 | [Adguard](./adguard)                                | `adguard/adguardhome`|
 | [Archivebox](./archivebox)                          | `archivebox/archivebox` |

@@ -1,6 +1,6 @@
 This is about as "plug and play" as an arr* stack will get. It **requires** configuration, explained below.
 
-## Requirements:
+## Requirements
 * A functioning VPN which allows you to export OpenVPN or Wireguard config files.
 * A server slightly more capable than a RPi.
 * Storage for all of your Linux ISOs (4K bluray *will* take up 20+ GB).
@@ -16,18 +16,18 @@ Finally: Grab a snack and a drink. Be prepared to spend the next hour or so gett
 ## So, where do I begin?
 This stack consists of 10 containers. You probably won't need them all. Pick and choose, then delete the rest. I'll lay the stack out here.
 
-### Content fetchers. 
+### Content fetchers
 These will actually download the content or assist in it.
-* Arch-qBittorrentVPN (requires Prowlarr!)
-	A torrent client with VPN and privoxy built-in. This makes sure you're never torrenting without VPN and saves you a lot of networking.
+* Arch-qBittorrentVPN (requires Prowlarr!) 
+	* A torrent client with VPN and privoxy built-in. This makes sure you're never torrenting without VPN and saves you a lot of networking.
 * Prowlarr
-	Will search the internet for torrents using indexers you specify.
+	* Will search the internet for torrents using indexers you specify.
 * SABnzbd
-	A Usenet downloader and an alternative to torrenting. Does not require a VPN or prowlarr.
+	* A Usenet downloader and an alternative to torrenting. Does not require a VPN or prowlarr.
 * rFlood (broken!)
-	Alternative to Arch-qBittorrentVPN with the same functionality. Does not work in its current state (PRs welcome!).
+	* Alternative to Arch-qBittorrentVPN with the same functionality. Does not work in its current state (PRs welcome!).
 
-### Collection managers. 
+### Collection managers
 These will manage your content, sending requests to the fetchers.
 * Radarr: Movies
 * Sonarr: TV series
@@ -35,7 +35,7 @@ These will manage your content, sending requests to the fetchers.
 * Readarr: Books
 * Whisparr: (not included) adult content
 
-### Request managers. 
+### Request managers
 These allow you to request content.
 * Doplarr: Discord bot (Radarr + Sonarr).
 * Jellyseerr: Web portal specifically for Jellyfin (Radarr + Sonarr).
@@ -45,7 +45,7 @@ If you've made your choices, delete the rest of the containers from the composef
 
 
 
-## Entries to change:
+## Entries to change
 
 
 ### Universal  (all containers)
@@ -57,8 +57,8 @@ If you've made your choices, delete the rest of the containers from the composef
 ### Arch-qBittorrentVPN
 * VPN_PROV: `<pia|airvpn|protonvpn|custom>`. See the [GH](https://github.com/binhex/arch-qbittorrentvpn) for config.
 * VPN_CLIENT: `<openvpn|wireguard>`
-* LAN_NETWORK:`<lan ipv4 network>/<cidr notation>`
-* NAME_SERVERS:`<name server ip(s)>`
+* LAN_NETWORK: `<lan ipv4 network>/<cidr notation>`
+* NAME_SERVERS: `<name server ip(s)>`
 
 ### Doplarr
 * SONARR__API: Sonarr API token (found in the WebUI)
@@ -70,17 +70,17 @@ If you've made your choices, delete the rest of the containers from the composef
 
 ### Helpful links
 * [Servarr wiki](https://wiki.servarr.com/)
-	Official wiki for Lidarr, Prowlarr, Radarr, Readarr, Sonarr, and Whisparr.
+	* Official wiki for Lidarr, Prowlarr, Radarr, Readarr, Sonarr, and Whisparr.
 * [TRaSH Guides](https://trash-guides.info/)
-	Guides on setting up everything post-install.
+	* Guides on setting up everything post-install.
 * [Hotio](https://hotio.dev/)
-	Maintains and serves most of the Docker images. You can find another dozen arr-related containers on here with (almost) plug-and-play composefiles. Integrate them and create a PR if you feel like helping out!
+	* Maintains and serves most of the Docker images. You can find another dozen arr-related containers on here with (almost) plug-and-play composefiles. Integrate them and create a PR if you feel like helping out!
 
 ### Debugging
 * A specific container is misbehaving and the logs don't show enough detail: 
-Put `LOG_LEVEL=DEBUG` in the environment section of the troublesome container. This will make it spit out a lot more info in its logs.
+	* Put `LOG_LEVEL=DEBUG` in the environment section of the troublesome container. This will make it spit out a lot more info in its logs.
 * The stack won't launch because ports are already in use:
-Issue `sudo netstat -tnlp` from the host machine to see which ports may already be in use. If you change one of the container's ports, be sure to check the rest of the composefile!
+	* Issue `sudo netstat -tnlp` from the host machine to see which ports may already be in use. If you change one of the container's ports, be sure to check the rest of the composefile!
 
 
 ### Contrubuting
