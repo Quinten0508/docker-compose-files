@@ -1,13 +1,13 @@
 # Docker-Compose Files
-Repository containing docker-compose files I use (or have used). Be sure to check the documentation of whatever service you want to run for any configuration changes or other updates. These composefiles will pull the latest image, but their config won't magically adapt to breaking changes that may be introduced in the future. Use these files as a template to create your own setup, do not copy and deploy them mindlessly.
+Repository containing docker-compose files I use (or have used). Be sure to check the documentation of whatever service you want to run for any configuration changes or other updates. These composefiles will pull the latest image, but their config won't magically adapt to breaking changes that may be introduced in the future. Use these files as a template to create your own setup, do not copy and deploy them mindlessly. Most important: **Read the README!**
 
 ## General Setup
-* Any volume mounts with e.g. config or data are stored at `/portainer/<service_name>`.
+* Any volume mounts with e.g. config or data are stored at `/portainer/<service_name>` unless specified otherwise. 
 * Any web interfaces exposed are ran through a reverse proxy which supplies SSL certificates. Running these services barebones usually means access via insecure HTTP and leaves you open to attacks. **Do not port-forward or expose these services to the internet without a reverse proxy.**
 
 ## Composefile Formatting
 I've tried to keep formatting the same across composefiles for readability and consistency, but swapping around different parts (for example, putting `image` above `container_name`) does not have any effect on how the container(s) will run.
-```
+```yaml
 version:
 services:
 
@@ -38,8 +38,8 @@ etc.
 ```
 
 ## (Cross-platform) Compatibility
-* This repository expects you to run an x86 based computer and does **not** support arm-based machines like the raspberry pi by default. It is up to the individual maintainers of each project to support other architectures like arm.
-* Windows users might run into trouble when trying to map data directories outside of the WSL environment. All your Windows partitions are mounted to the docker WSL environment under `/mnt/`. As an example, `C:\Users\user1\Documents\nextcloud\` would become `/mnt/c/Users/user1/Documents/nextcloud/`.
+* This repository expects you to run an x86 based computer and does **not** support arm-based machines like the raspberry pi by design (but it's always worth a shot!). It is up to the individual maintainers of each project to support other architectures like arm.
+* Windows users might run into trouble when trying to map data directories outside of the WSL environment. All your Windows partitions are mounted to the docker WSL environment under `/mnt/`. As an example, `C:\Users\user1\Documents\nextcloud\` would become `/mnt/c/Users/user1/Documents/nextcloud/`. However, it is strongly recommended not to do this, a mapped directories outside of the WSL environment will incur a severe performance penalty which may not be desirable in some situations.
 
 ## Contributing
-Any contributions are welcome, just open a PR or submit an issue!
+Any contributions are welcome, just open a PR or submit an issue! Try to follow [the formatting outlined above](#composefile-formatting) for consistency.
