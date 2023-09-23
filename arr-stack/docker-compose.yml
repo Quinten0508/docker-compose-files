@@ -1,0 +1,220 @@
+version: "3"
+
+services:
+
+
+  arch-qbittorrentvpn:
+    container_name: arch-qbittorrentvpn
+    image: binhex/arch-qbittorrentvpn:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TIMEZONE
+      - WEBUI_PORT=12249
+    ports:
+      - 6881:6881
+      - '6881:6881/udp'
+      - 8010:8010
+      - 8118:8118
+    environment:
+      - VPN_ENABLED=yes
+      - VPN_USER=
+      - VPN_PASS=
+      - VPN_PROV=custom
+      - VPN_CLIENT=wireguard
+      - VPN_OPTIONS=
+      - STRICT_PORT_FORWARD=
+      - ENABLE_PRIVOXY=yes
+      - LAN_NETWORK=192.168.1.0/24
+      - NAME_SERVERS=84.200.69.80,37.235.1.174,1.1.1.1,37.235.1.177,84.200.70.40,1.0.0.1
+      - VPN_INPUT_PORTS=
+      - VPN_OUTPUT_PORTS=
+      - DEBUG=false
+      - WEBUI_PORT=8010
+      - UMASK=000
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - $FILEPATH/config/qbittorrent:/config
+      - $FILEPATH/torrents:/data/torrents
+      - /etc/localtime:/etc/localtime:ro
+    sysctls:
+       - net.ipv4.conf.all.src_valid_mark=1
+    cap_add:
+       - NET_ADMIN
+       - SYS_MODULE
+#    privileged: true
+    restart: always
+
+
+  sabnzbd:
+    container_name: sabnzbd
+    image: ghcr.io/hotio/sabnzbd:latest
+    ports:
+      - 8008:8080
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TIMEZONE
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $FILEPATH/config/sabnzbd:/config
+      - $FILEPATH/usenet:/data/usenet:rw
+    restart: always
+
+
+  prowlarr:
+    container_name: prowlarr
+    image: ghcr.io/hotio/prowlarr:latest
+    ports:
+      - 9696:9696
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TIMEZONE
+    volumes:
+      - $FILEPATH/config/prowlarr:/config
+    restart: always
+
+
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TIMEZONE
+    volumes:
+      - $FILEPATH/config/radarr:/config
+      - $FILEPATH:/data
+    ports:
+      - 7878:7878
+    restart: always
+
+
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TIMEZONE
+    volumes:
+      - $FILEPATH/config/sonarr:/config
+      - $FILEPATH:/data
+    ports:
+      - 8989:8989
+    restart: always
+
+
+  lidarr:
+    container_name: lidarr
+    image: ghcr.io/hotio/lidarr:latest
+    ports:
+      - 8686:8686
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=$TIMEZONE
+    volumes:
+      - $FILEPATH/config/lidarr:/config
+      - $FILEPATH/media:/data/media
+    restart: always
+
+
+  readarr:
+    container_name: readarr
+    image: ghcr.io/hotio/readarr:latest
+    ports:
+      - 8787:8787
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=$TIMEZONE
+    volumes:
+      - $FILEPATH/config/readarr:/config
+      - $FILEPATH/media:/data/media
+    restart: always
+
+
+  bazarr:
+    container_name: bazarr
+    image: ghcr.io/hotio/bazarr:latest
+    restart: always
+    ports:
+      - 6767:6767
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=$TIMEZONE
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $FILEPATH/config/bazarr:/config
+      - $FILEPATH/media:/data/media
+    restart: always
+
+
+  jellyseerr:
+     container_name: jellyseerr
+     image: ghcr.io/hotio/jellyseerr
+     ports:
+          - 5055:5055
+     environment:
+          - TZ=$TIMEZONE
+     volumes:
+          - $FILEPATH/config/jellyseer/:/app/config
+     restart: always
+
+
+  doplarr:
+    container_name: doplarr
+    image: ghcr.io/hotio/doplarr:latest
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=$TIMEZONE
+      - SONARR__URL=http://sonarr:8989
+      - RADARR__URL=http://radarr:7878
+      - SONARR__API=
+      - RADARR__API=
+      - DISCORD__TOKEN=
+    volumes:
+      - $FILEPATH/config/doplarr:/config
+    restart: always
+
+
+
+#  rflood:
+#    container_name: rflood
+#    image: ghcr.io/hotio/rflood
+#    ports:
+#      - 3555:3555
+#      - 8118:8118
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - UMASK=002
+#      - TZ=$TIMEZONE
+#      - VPN_ENABLED=true
+#      - VPN_LAN_NETWORK
+#      - VPN_CONF=wg0
+#      - VPN_ADDITIONAL_PORTS=
+#      - PRIVOXY_ENABLED=true
+#      - FLOOD_AUTH=true
+#      - WEBUI_PORT=3555
+#    volumes:
+#      - $FILEPATH/config/rflood:/config
+#      - $FILEPATH/torrents:/data/torrents
+#    cap_add:
+#      - NET_ADMIN
+#    sysctls:
+#      - net.ipv4.conf.all.src_valid_mark=1
+#      - net.ipv6.conf.all.disable_ipv6=0
+#    dns:
+#      - 1.1.1.1
+#    devices:
+#      - /dev/net/tun:/dev/net/tun
+#    restart: always
