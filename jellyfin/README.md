@@ -1,4 +1,3 @@
-
 Media is stored in `/portainer/jellyfin/media/` by default. Change this path to your media location, or add multiple volumes to seperate media. Example:
 ```
       - /home/user/music:/media/music
